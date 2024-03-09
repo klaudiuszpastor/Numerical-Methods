@@ -1,15 +1,18 @@
+import timeit
+
 class Fibonacci:
     def __init__(self, n):
         self.n = n
-
     def calculate(self):
-        fib_sequence = [0, 1]
+        fib_num = [0, 1]
         for i in range(2, self.n):
-            fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
-        return fib_sequence
+            fib_num.append(fib_num[-1] + fib_num[-2])
+        return fib_num
 
-# Przykład użycia:
-n = 10
+n = 30
 fib = Fibonacci(n)
-fibonacci_sequence = fib.calculate()
-print(fibonacci_sequence)
+fibonacci_num = fib.calculate()
+print(fibonacci_num)
+
+time_taken = timeit.timeit(lambda: fib.calculate(), number=1)
+print("Czas wykonania:", time_taken, "sekundy")

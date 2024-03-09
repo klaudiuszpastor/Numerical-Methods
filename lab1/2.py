@@ -1,20 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Definiujemy współczynniki a i b
-a = 2
-b = 3
 
-# Tworzymy zakres zmiennej niezależnej x
-x = np.linspace(0, 10, 100)  # Przykładowy zakres od 0 do 10 z 100 punktami
+def wykres(a,b,x1,x2):
+    x = np.linspace(x1, x2, 100)  # Przykładowy zakres od x1 do x2 z 100 punktami
+    y = a * (x - b)**2
+    plt.plot(x, y)
+    plt.title('Wykres funkcji kwadratowej y = a * (x - b)^2')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.grid(True)
+    plt.show()
 
-# Obliczamy wartości funkcji kwadratowej y
-y = a * (x - b)**2
+wykres(2,4,0,10)
 
-# Tworzymy wykres
-plt.plot(x, y)
-plt.title('Wykres funkcji kwadratowej y = a * (x - b)^2')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.grid(True)
-plt.show()
+y1 = np.arange(1.0,5.0,0.01) #Trzeci argument jako podanie kroku
+y2 = np.linspace(1.0,5.0,400) #Trzeci argument określa liczbę punktów
+
+print(y1)
+print(y2)
