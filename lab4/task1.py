@@ -60,7 +60,7 @@ def wykres(funkcja, a, b):
 x_min = -2
 x_max = 2
 
-funkcja = '2*x**2-4*np.sin(x)+np.exp(x)-5'
+funkcja = '3*x**2-4*np.sin(x)+np.exp(x)-5'
 # Rysowanie wykresu
 wykres(funkcja, x_min, x_max)
 

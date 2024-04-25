@@ -1,48 +1,41 @@
+# Zastosuj metodę iteracyjną (Gaussa-Seidela) do rozwiązywanie układów równań
+# liniowych. Metoda iteracyjna jest stosowana zazwyczaj do układów równań rzędu >3 i
+# wymaga definicji punktu startowego x0. W kolejnych iteracjach wyznaczane są
+# rozwiązania dla poszczególnych xi i porównywane z założonym błędem całkowitym e. W
+# ramach ćwiczenia oszacuj liczbę iteracji N konieczną do wyznaczenia rozwiązania z
+# dokładnością równą, np. 1 %.
+# https://pl.wikipedia.org/wiki/Metoda_Gaussa-Seidla
+
 import numpy as np
 
 # Dane wejściowe
-a = np.array([[6.0, 2.0, 8.0],
-              [3.0, 5.0, 2.0],
-              [2.0, 8.0, 2.0]])
-b = np.array([26.0, 18.0, 1.0])
+A = np.array([[6, 2, 8],
+              [3, 5, 2],
+              [2, 8, 2]])
+y = np.array([26, 18, 1])
 
-# Normalizacja danych
-max_value_a = np.max(np.abs(a))
-max_value_b = np.max(np.abs(b))
-a_normalized = a / max_value_a
-b_normalized = b / max_value_b
+x = np.linalg.solve(A,y)
 
-# Definicja punktu startowego
-x0 = np.ones_like(b_normalized)  # Wartość początkowa - jedynki
+print("Rozwiazanie macieczowe=",x)
+print("-----------------------")
 
-# Definicja dokładności
-tolerance = 0.01  # 1%
+def metoda_iteracyjna(mA,my,x):
+    n=len(mA)
+    for j in range(0,n):
+        yj = my[j]
+        suma = 0
+        for i in range(0,n):
+            if(j!=i):
+                suma += mA[j][i] * x[i]
+        x[j] = (yj-suma) / mA[j][j]
+    return x
 
-# Definicja maksymalnej liczby iteracji
-max_iter = 1000
-
-# Metoda iteracyjna (Gaussa-Seidela)
-def gauss_seidel(a, b, x0, tolerance, max_iter):
-    n = len(a)
-    x = np.copy(x0)
-    x_new = np.copy(x0)
-    for iteration in range(1, max_iter + 1):
-        for i in range(n):
-            sigma = 0
-            for j in range(n):
-                if j != i:
-                    sigma += a[i][j] * x_new[j]
-            x[i] = (b[i] - sigma) / a[i][i]
-        if np.linalg.norm(x - x_new) / np.linalg.norm(x0) < tolerance:
-            return x, iteration
-        x_new = np.copy(x)
-    return x, max_iter
-
-# Wyznaczenie rozwiązania
-solution, num_iterations = gauss_seidel(a_normalized, b_normalized, x0, tolerance, max_iter)
-
-# Odnormalizacja rozwiązania
-solution_original = solution * max_value_b
-
-print("Rozwiązanie układu równań liniowych:", solution_original)
-print("Liczba iteracji potrzebna do osiągnięcia dokładności 1%:", num_iterations)
+x0 = np.array([0.,0.,0.])
+xi = np.array([])
+e=0
+for i in range(0,10):
+    xi = metoda_iteracyjna(A,y,x0.copy())
+    print("Rozwiazanie iteracyjne [",i,"]=",xi)
+    e = np.linalg.norm([])
+    print("Blad [",i,"]=",e)
+    x0=xi[:]
